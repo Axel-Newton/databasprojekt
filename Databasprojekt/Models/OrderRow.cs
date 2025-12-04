@@ -19,4 +19,7 @@ public class OrderRow
     [Required]
     public decimal UnitPrice { get; set; }
     
+    public Order? Order { get; set; }
+    
+    public Product? Product { get; set; }
 }

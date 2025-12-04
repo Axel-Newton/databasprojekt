@@ -3186,19 +3186,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/axellarsson/.nuget/packages/": {}
+    "C:\\Users\\Axlo0\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/axellarsson/RiderProjects/databasprojekt1/Databasprojekt/Databasprojekt.csproj",
+      "projectUniqueName": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\Databasprojekt.csproj",
       "projectName": "Databasprojekt",
-      "projectPath": "/Users/axellarsson/RiderProjects/databasprojekt1/Databasprojekt/Databasprojekt.csproj",
-      "packagesPath": "/Users/axellarsson/.nuget/packages/",
-      "outputPath": "/Users/axellarsson/RiderProjects/databasprojekt1/Databasprojekt/obj/",
+      "projectPath": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\Databasprojekt.csproj",
+      "packagesPath": "C:\\Users\\Axlo0\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/axellarsson/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Axlo0\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -3254,7 +3254,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.413/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\Axlo0\\.dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
