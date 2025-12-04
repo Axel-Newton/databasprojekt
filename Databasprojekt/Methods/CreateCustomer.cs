@@ -1,6 +1,6 @@
 namespace Databasprojekt.Methods;
 
-public class CreateCustomerAsync
+public class CreateCustomer
 {
     
 }

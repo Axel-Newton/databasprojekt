@@ -15,7 +15,7 @@ public class ShopContext : DbContext
     {
         var dbPath = Path.Combine(AppContext.BaseDirectory, "databasprojekt.db");
         
-        optionsBuilder.UseSqlite(dbPath);
+        optionsBuilder.UseSqlite($"Filename={dbPath}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ public class ShopContext : DbContext
         modelBuilder.Entity<OrderSummary>(e =>
         {
             e.HasNoKey(); // No PK
-            e.ToView("view_order_summary"); // Connects table to SQlite
+            e.ToView("OrderSummaryView"); // Connects table to SQlite
             
         });
         //Categories

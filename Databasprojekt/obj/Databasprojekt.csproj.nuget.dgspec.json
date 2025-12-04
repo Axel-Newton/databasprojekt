@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\Databasprojekt.csproj": {}
+    "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\databasprojekt\\Databasprojekt.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\Databasprojekt.csproj": {
+    "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\databasprojekt\\Databasprojekt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\Databasprojekt.csproj",
+        "projectUniqueName": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\databasprojekt\\Databasprojekt.csproj",
         "projectName": "Databasprojekt",
-        "projectPath": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\Databasprojekt.csproj",
+        "projectPath": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\databasprojekt\\Databasprojekt.csproj",
         "packagesPath": "C:\\Users\\Axlo0\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\Databasprojekt\\obj\\",
+        "outputPath": "C:\\Users\\Axlo0\\RiderProjects\\databasprojekt\\databasprojekt\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Axlo0\\AppData\\Roaming\\NuGet\\NuGet.Config"
