@@ -48,6 +48,7 @@ public class ShopContext : DbContext
             
             e.Property(x => x.Name).IsRequired().HasMaxLength(100);
             e.Property(x => x.Price).IsRequired();
+            e.Property(x => x.StockQuantity).IsRequired();
             e.Property(x => x.Description).HasMaxLength(250);
             
         });

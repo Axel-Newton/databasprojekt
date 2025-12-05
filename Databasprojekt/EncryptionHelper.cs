@@ -67,7 +67,7 @@ public class EncryptionHelper
             bytes[i] = (byte)(bytes[i] ^ Key);
         }
         
-        // 3 Konverterar tillbaka frpn bytes -> klartext med UTF8
+        // 3 Konverterar tillbaka från bytes -> klartext med UTF8
         return System.Text.Encoding.UTF8.GetString(bytes);
     }
 
