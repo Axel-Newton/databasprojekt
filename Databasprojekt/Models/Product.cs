@@ -13,6 +13,9 @@ public class Product
     [Required]
     public decimal Price { get; set; }
     
+    [Required]
+    public int StockQuantity { get; set; }
+    
     [MaxLength(250)]
     public string? Description { get; set; }
     
