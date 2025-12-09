@@ -8,7 +8,7 @@ public class DbSeeding
     {
         using (var db = new ShopContext())
         {
-            await db.Database.MigrateAsync();
+            await db.Database.EnsureCreatedAsync();
 
             if (!await db.Customers.AnyAsync())
             {
@@ -36,9 +36,9 @@ public class DbSeeding
             if (!await db.Products.AnyAsync())
             {
                 db.Products.AddRange(
-                    new Product {Name = "Milk", Price = 13, Description = "Milk from ARLA", CategoryId = dairy.CategoryId},
-                    new Product {Name = "Chips", Price = 25, Description = "Sourcream & Onion chips from estrella", CategoryId = sweets.CategoryId},
-                    new Product {Name = "Cheese", Price = 100, Description = "Six months aged cheese", CategoryId = dairy.CategoryId}
+                    new Product {Name = "Milk", Price = 13, Description = "Milk from ARLA", StockQuantity = 150, CategoryId = dairy.CategoryId},
+                    new Product {Name = "Chips", Price = 25, Description = "Sourcream & Onion chips from Estrella", StockQuantity = 50, CategoryId = sweets.CategoryId},
+                    new Product {Name = "Cheese", Price = 100, Description = "Six months aged cheese", StockQuantity = 70, CategoryId = dairy.CategoryId}
                     );
                 await db.SaveChangesAsync();
                 Console.WriteLine("Product(s) seeded in db!");
