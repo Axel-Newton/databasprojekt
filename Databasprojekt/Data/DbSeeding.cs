@@ -8,7 +8,7 @@ public class DbSeeding
     {
         using (var db = new ShopContext())
         {
-            await db.Database.MigrateAsync();
+            await db.Database.EnsureCreatedAsync();
 
             if (!await db.Customers.AnyAsync())
             {
