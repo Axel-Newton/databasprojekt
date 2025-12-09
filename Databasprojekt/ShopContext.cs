@@ -38,7 +38,7 @@ public class ShopContext : DbContext
             
             e.HasMany(x => x.Products)
                 .WithOne(x => x.Category)
-                .HasForeignKey(x => x.ProductId)
+                .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 

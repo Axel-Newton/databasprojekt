@@ -4,6 +4,36 @@ using Databasprojekt.Models;
 
 public class CategoryHelper
 {
+    public static async Task CategoryMenuAsync()
+    {
+        using var db = new ShopContext();
+        
+        Console.WriteLine("What would you like to do?");
+        Console.WriteLine("1. Add a new category");
+        Console.WriteLine("2. List all categories");
+        Console.WriteLine("3. Delete category");
+        Console.WriteLine("");
+        
+        var choice = Console.ReadKey().KeyChar;
+
+        if (choice == '1')
+        {
+            await CreateCategoryAsync();
+        }
+        else if (choice == '2')
+        {
+            await ListCategoriesAsync();
+        }
+        else if (choice == '3')
+        {
+            await DeleteCategoryAsync();
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice.");
+        }
+        
+    }
     public static async Task CreateCategoryAsync()
     {
         using var db = new ShopContext(); 
@@ -63,7 +93,55 @@ public class CategoryHelper
             {
                 Console.WriteLine("CategoryId can not be empty");
             }
-            
+            else 
+            {
+                var selectedCategory = await db.Categories
+                    .Include(c => c.Products)
+                    .FirstOrDefaultAsync(c => c.CategoryId == int.Parse(categoryId));
+
+                if (selectedCategory == null)
+                {
+                    Console.WriteLine("Category not found");
+                    return;
+                }
+                
+                Console.WriteLine($"Here are the products under the Category: {selectedCategory.CategoryName}");
+                foreach (var product in selectedCategory.Products)
+                {
+                    Console.WriteLine($"- {product.ProductId} | {product.Name}");
+                }
+            }
+        }
+    }
+
+    public static async Task DeleteCategoryAsync()
+    {
+        using var db = new ShopContext();
+        
+        Console.WriteLine("Enter the CategoryId of the category you want to delete:");
+        if (!int.TryParse(Console.ReadLine(), out var categoryId))
+        {
+            Console.WriteLine("Invalid CategoryId!");
+            return;
+        }
+        
+        var category = await db.Categories.FindAsync(categoryId);
+        if (category == null)
+        {
+            Console.WriteLine("Category not found");
+            return;
+        }
+        
+        db.Categories.Remove(category);
+        try
+        {
+            await db.SaveChangesAsync();
+            Console.WriteLine("Category Deleted successfully!");
+        }
+        catch (DbUpdateException exception)
+        {
+            Console.WriteLine(exception.Message);
+            Console.WriteLine("Something went wrong... :(");
         }
     }
 }

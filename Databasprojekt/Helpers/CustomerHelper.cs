@@ -4,6 +4,36 @@ using Microsoft.EntityFrameworkCore;
 
 public class CustomerHelper
 {
+    public static async Task CustomerMenuAsync()
+    {
+        using var db = new ShopContext();
+        
+        Console.WriteLine("What would you like to do?");
+        Console.WriteLine("1. Add a new customer");
+        Console.WriteLine("2. List all customers");
+        Console.WriteLine("3. Delete a Customer");
+        Console.WriteLine("");
+        
+        var choice = Console.ReadKey().KeyChar;
+
+        if (choice == '1')
+        {
+            await CreateCustomerAsync();
+        }
+        else if (choice == '2')
+        {
+            await ListCustomersAsync();
+        }
+        else if (choice == '3')
+        {
+            await DeleteCustomerAsync();
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice.");
+        }
+        
+    }
     public static async Task CreateCustomerAsync()
     {
         using var db = new ShopContext();
@@ -65,5 +95,35 @@ public class CustomerHelper
             Console.WriteLine($"{customer.CustomerId} | {customer.Name}  | {customer.Email} | {customer.City} | {customer.Orders.Count}");
         }
     }
-    
+
+    public static async Task DeleteCustomerAsync()
+    {
+        using var db = new ShopContext();
+        
+        Console.WriteLine("Enter customer id of the customer that you want to erase:");
+        if (!int.TryParse(Console.ReadLine(), out var customerId))
+        {
+            Console.WriteLine("Invalid CustomerId");
+            return;
+        }
+        
+        var customer = await db.Customers.FindAsync(customerId);
+        if (customer == null)
+        {
+            Console.WriteLine("Customer not found");
+            return;
+        }
+        
+        db.Customers.Remove(customer);
+        try
+        {
+            await db.SaveChangesAsync();
+            Console.WriteLine("Customer deleted!");
+        }
+        catch (DbUpdateException exception)
+        {
+            Console.WriteLine(exception.Message);
+            Console.WriteLine("Something went wrong... :(");
+        }
+    }
 }
