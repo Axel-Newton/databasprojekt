@@ -1,4 +1,4 @@
-﻿using Databasprojekt;
+﻿using Databasprojekt.Data;
 using Databasprojekt.Models;
 using Databasprojekt.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -31,11 +31,11 @@ while (true)
             await CustomerHelper.CustomerMenuAsync();
             break;
         case '4':
-            //await OrderHelper.OrderMenuAsync();
+            await OrderHelper.OrderMenuAsync();
             break;
         case '5':
             Console.WriteLine("Exiting program...");
-            break;
+            return;
         default:
             Console.WriteLine("Invalid choice");
             break;

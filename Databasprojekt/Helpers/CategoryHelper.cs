@@ -11,7 +11,8 @@ public class CategoryHelper
         Console.WriteLine("What would you like to do?");
         Console.WriteLine("1. Add a new category");
         Console.WriteLine("2. List all categories");
-        Console.WriteLine("3. Delete category");
+        Console.WriteLine("3. Edit category");
+        Console.WriteLine("4. Delete category");
         Console.WriteLine("");
         
         var choice = Console.ReadKey().KeyChar;
@@ -25,6 +26,10 @@ public class CategoryHelper
             await ListCategoriesAsync();
         }
         else if (choice == '3')
+        {
+            await EditCategoryAsync();
+        }
+        else if (choice == '4')
         {
             await DeleteCategoryAsync();
         }
@@ -114,6 +119,75 @@ public class CategoryHelper
         }
     }
 
+    public static async Task EditCategoryAsync()
+    {
+        using var db = new ShopContext();
+        
+        Console.WriteLine("Enter CategoryId of the category you want to edit:");
+        if (!int.TryParse(Console.ReadLine(), out var categoryId))
+        {
+            Console.WriteLine("Invalid CategoryId!");
+        }
+        
+        var category = await db.Categories.FindAsync(categoryId);
+        if (category == null)
+        {
+            Console.WriteLine("Category not found");
+        }
+        Console.WriteLine("Category Name | CategoryId | CategoryDescription");
+        Console.WriteLine($"{category?.CategoryName} | {category?.CategoryId} | {category?.Description}");
+        Console.WriteLine($"Products under  the Category: {category?.CategoryName}");
+        Console.WriteLine("ProductId | Name | Price | Description");
+        foreach (var product in category?.Products)
+        {
+            Console.WriteLine($"- {product.ProductId} | {product.Name} | {product.Price:C} | {product.Description}");
+        }
+
+        while (true)
+        {
+            Console.WriteLine();
+            Console.WriteLine("What would you like to do?");
+            Console.WriteLine("1. Change Category Name");
+            Console.WriteLine("2. Change Category Description");
+            Console.WriteLine("3. Exit to Menu");
+            Console.WriteLine("");
+            var choice = Console.ReadKey().KeyChar;
+
+            switch (choice)
+            {
+                case '1':
+                    Console.WriteLine("Enter new name:");
+                    var newName = Console.ReadLine();
+                    if (string.IsNullOrEmpty(newName))
+                    {
+                        Console.WriteLine("Name can not be empty");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Category Name changed from {category.CategoryName} to {newName}");
+                        category.CategoryName = newName;
+                    }
+                    break;
+                case '2':
+                    Console.WriteLine("Enter new description:");
+                    var newDescription = Console.ReadLine();
+                    if (string.IsNullOrEmpty(newDescription))
+                    {
+                        Console.WriteLine("Description can not be empty");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Description changed from {category.Description} to {newDescription}");
+                        category.Description = newDescription;
+                    }
+                    break;
+                case '3':
+                    Console.WriteLine("Returning to Menu...");
+                    return;
+            }
+        }
+    }
+    
     public static async Task DeleteCategoryAsync()
     {
         using var db = new ShopContext();

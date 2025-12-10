@@ -1,4 +1,4 @@
-namespace Databasprojekt;
+namespace Databasprojekt.Data;
 using Databasprojekt.Models;
 using Microsoft.EntityFrameworkCore;
 

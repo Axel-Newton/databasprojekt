@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Databasprojekt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd93d7710b7df34800d7c70771acdd5c9e6de6ef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61fd52a4fc4e70264eaf7cb9f80106d8f973c54f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Databasprojekt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Databasprojekt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
