@@ -8,6 +8,8 @@ public class CustomerHelper
     {
         using var db = new ShopContext();
         
+        await AdminHelper.AdminCheckAsync();
+        
         Console.WriteLine("What would you like to do?");
         Console.WriteLine("1. Add a new customer");
         Console.WriteLine("2. List all customers");
@@ -44,6 +46,7 @@ public class CustomerHelper
         if (string.IsNullOrEmpty(name) || name.Length > 100) 
         {
             Console.WriteLine("Customer name cannot be empty or more than 100 characters");
+            return;
         }
         
         Console.WriteLine("Enter customer email:");
@@ -52,6 +55,7 @@ public class CustomerHelper
         if (string.IsNullOrEmpty(email) || email.Length > 100)
         {
             Console.WriteLine("Customer email cannot be empty or more than 100 characters");
+            return;
         }
         
         Console.WriteLine("Enter customer city:");
@@ -60,6 +64,7 @@ public class CustomerHelper
         if (city?.Length > 100)
         {
             Console.WriteLine("Customer city cannot be more than 100 characters");
+            return;
         }
         
         await db.Customers.AddAsync(new Customer{Name = name, Email = email, City = city});

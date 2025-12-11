@@ -41,7 +41,9 @@ public class CategoryHelper
     }
     public static async Task CreateCategoryAsync()
     {
-        using var db = new ShopContext(); 
+        using var db = new ShopContext();
+
+        await AdminHelper.AdminCheckAsync();
         
         Console.WriteLine("Enter Category Name:");
         var categoryName = Console.ReadLine();
@@ -123,6 +125,8 @@ public class CategoryHelper
     {
         using var db = new ShopContext();
         
+        await AdminHelper.AdminCheckAsync();
+        
         Console.WriteLine("Enter CategoryId of the category you want to edit:");
         if (!int.TryParse(Console.ReadLine(), out var categoryId))
         {
@@ -191,6 +195,8 @@ public class CategoryHelper
     public static async Task DeleteCategoryAsync()
     {
         using var db = new ShopContext();
+        
+        await AdminHelper.AdminCheckAsync();
         
         Console.WriteLine("Enter the CategoryId of the category you want to delete:");
         if (!int.TryParse(Console.ReadLine(), out var categoryId))

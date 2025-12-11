@@ -129,7 +129,9 @@ public class OrderHelper
     static async Task ListOrderSummaryAsync()
     {
         using var db = new ShopContext();
-
+        
+        await AdminHelper.AdminCheckAsync();
+        
         var summaries = await db.OrderSummaries.OrderByDescending(o => o.OrderDate).ToListAsync();
         
         Console.WriteLine("OrderId | OrderDate | TotalAmount | Customer Email");
@@ -143,16 +145,35 @@ public class OrderHelper
     {
         using var db = new ShopContext(); 
         
-        var orders = await db.Orders
+        await AdminHelper.AdminCheckAsync();
+        
+        var sq = System.Diagnostics.Stopwatch.StartNew();
+        
+        Console.WriteLine("Enter Page:");
+        var page = int.Parse(Console.ReadLine().Trim());
+        
+        Console.WriteLine("Enter PageSize:");
+        var pageSize = int.Parse(Console.ReadLine().Trim());
+        
+        var query = db.Orders
             .AsNoTracking()
             .Include(o => o.Customer)
             .Include(o => o.OrderRows)
-            .OrderBy(o => o.OrderId)
-            .ToListAsync();
-
+            .OrderBy(o => o.OrderDate);
+        
+        sq.Stop();
+        Console.WriteLine($"Total Time: {sq.ElapsedMilliseconds} ms");
+        
+        var totalCount = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+        
+        var orders = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();    
+        
+        Console.WriteLine($"Page: {page}, PageSize: {pageSize}, TotalPages: {totalPages}");
+        Console.WriteLine("OrderId | OrderDate | TotalAmount | Customer Email | Status");
         foreach (var order in orders)
         {
-            Console.WriteLine($"{order.OrderId} | {order.Customer?.Email} | {order.TotalAmount:C}");
+            Console.WriteLine($"{order.OrderId} | {order.OrderDate} | {order.TotalAmount:C} | {order.Customer?.Email} | {order.Status}");
         }
     }
 

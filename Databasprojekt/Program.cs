@@ -1,7 +1,5 @@
 ﻿using Databasprojekt.Data;
-using Databasprojekt.Models;
 using Databasprojekt.Helpers;
-using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Db " + Path.Combine(AppContext.BaseDirectory, "databasprojekt.db"));
 
