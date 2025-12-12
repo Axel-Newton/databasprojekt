@@ -27,11 +27,12 @@ public class OrderHelper
         }
         else if (choice == '3')
         {
-            await ListOrderSummaryAsync();
+            await DeleteOrderAsync();
         }
         else if (choice == '4')
         {
-            //await DeleteOrderAsync();
+            Console.WriteLine("Returning...");
+            return;
         }
         else
         {
@@ -81,9 +82,10 @@ public class OrderHelper
 
             Console.WriteLine("How many would you like to order?");
             var quantity = Console.ReadLine();
-            if (quantity == null)
+            if (!int.TryParse(quantity, out var parsedQuantity)  || parsedQuantity > product.StockQuantity)
             {
-                Console.WriteLine("Invalid quantity!, can not be empty");
+                Console.WriteLine("Invalid quantity!, can not be empty or more than " + product.StockQuantity);
+                return;
             }
             
             var orderrow = new OrderRow
@@ -95,6 +97,9 @@ public class OrderHelper
             };
             order.OrderRows.Add(orderrow);
             await db.OrderRows.AddAsync(orderrow);
+            
+            product.StockQuantity -= orderrow.Quantity;
+            db.Products.Update(product);
             
             try
             {
@@ -125,7 +130,9 @@ public class OrderHelper
     static async Task ListOrderSummaryAsync()
     {
         using var db = new ShopContext();
-
+        
+        await AdminHelper.AdminCheckAsync();
+        
         var summaries = await db.OrderSummaries.OrderByDescending(o => o.OrderDate).ToListAsync();
         
         Console.WriteLine("OrderId | OrderDate | TotalAmount | Customer Email");
@@ -139,16 +146,69 @@ public class OrderHelper
     {
         using var db = new ShopContext(); 
         
-        var orders = await db.Orders
+        await AdminHelper.AdminCheckAsync();
+        
+        var sq = System.Diagnostics.Stopwatch.StartNew();
+        
+        Console.WriteLine("Enter Page:");
+        var page = int.Parse(Console.ReadLine().Trim());
+        
+        Console.WriteLine("Enter PageSize:");
+        var pageSize = int.Parse(Console.ReadLine().Trim());
+        
+        var query = db.Orders
             .AsNoTracking()
             .Include(o => o.Customer)
             .Include(o => o.OrderRows)
-            .OrderBy(o => o.OrderId)
-            .ToListAsync();
-
+            .OrderBy(o => o.OrderDate);
+        
+        sq.Stop();
+        Console.WriteLine($"Total Time: {sq.ElapsedMilliseconds} ms");
+        
+        var totalCount = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+        
+        var orders = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();    
+        
+        Console.WriteLine($"Page: {page}, PageSize: {pageSize}, TotalPages: {totalPages}");
+        Console.WriteLine("OrderId | OrderDate | TotalAmount | Customer Email | Status");
         foreach (var order in orders)
         {
-            Console.WriteLine($"{order.OrderId} | {order.Customer?.Email} | {order.TotalAmount:C}");
+            Console.WriteLine($"{order.OrderId} | {order.OrderDate} | {order.TotalAmount:C} | {order.Customer?.Email} | {order.Status}");
+        }
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+    }
+
+    static async Task DeleteOrderAsync()
+    {
+        using var db = new ShopContext();
+        
+        Console.WriteLine("Enter the OrderId of the product you want to delete:");
+        if (!int.TryParse(Console.ReadLine(), out var orderId))
+        {
+            Console.WriteLine("Invalid OrderId!");
+            return;
+        }
+        
+        var order = await db.Categories.FindAsync(orderId);
+        if (order == null)
+        {
+            Console.WriteLine("Order not found");
+            return;
+        }
+        
+        db.Categories.Remove(order);
+        try
+        {
+            await db.SaveChangesAsync();
+            Console.WriteLine("Order Deleted successfully!");
+        }
+        catch (DbUpdateException exception)
+        {
+            Console.WriteLine(exception.Message);
+            Console.WriteLine("Something went wrong... :(");
         }
     }
+    
 }

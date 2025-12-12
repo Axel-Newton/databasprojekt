@@ -50,9 +50,9 @@ public class ShopContext : DbContext
             e.Property(x => x.Price).IsRequired();
             e.Property(x => x.StockQuantity).IsRequired();
             e.Property(x => x.Description).HasMaxLength(250);
-            
         });
-
+        
+        
         modelBuilder.Entity<Customer>(e =>
         {
             //PK
@@ -95,5 +95,7 @@ public class ShopContext : DbContext
                 .HasForeignKey(x => x.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+        modelBuilder.Entity<Order>().HasIndex(o => o.OrderDate);
+        modelBuilder.Entity<Order>().HasIndex(o => o.CustomerId);
     }
 }

@@ -140,12 +140,13 @@ namespace Databasprojekt.Migrations
 
                     b.ToTable((string)null);
 
-                    b.ToView("view_order_summary", (string)null);
+                    b.ToView("OrderSummaryView", (string)null);
                 });
 
             modelBuilder.Entity("Databasprojekt.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CategoryId")
@@ -163,7 +164,12 @@ namespace Databasprojekt.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -202,7 +208,7 @@ namespace Databasprojekt.Migrations
                 {
                     b.HasOne("Databasprojekt.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
