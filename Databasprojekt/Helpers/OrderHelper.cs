@@ -27,11 +27,12 @@ public class OrderHelper
         }
         else if (choice == '3')
         {
-            await ListOrderSummaryAsync();
+            await DeleteOrderAsync();
         }
         else if (choice == '4')
         {
-            await DeleteOrderAsync();
+            Console.WriteLine("Returning...");
+            return;
         }
         else
         {
@@ -175,6 +176,8 @@ public class OrderHelper
         {
             Console.WriteLine($"{order.OrderId} | {order.OrderDate} | {order.TotalAmount:C} | {order.Customer?.Email} | {order.Status}");
         }
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
     }
 
     static async Task DeleteOrderAsync()

@@ -1,7 +1,7 @@
 namespace Databasprojekt.Helpers;
 public class AdminHelper
 {
-    private static string? _adminPassword = string.Empty;
+    private static string _adminPassword = string.Empty;
 
     public static async Task AdminCheckAsync()
     {
@@ -22,6 +22,7 @@ public class AdminHelper
         if (string.IsNullOrEmpty(_adminPassword) || _adminPassword.Length > 50)
         {
             Console.WriteLine("Invalid password, can not be empty or more than 50 characters");
+            return;
         }
         _adminPassword = EncryptionHelper.Encrypt(_adminPassword);
     }
@@ -32,7 +33,7 @@ public class AdminHelper
         {
             Console.WriteLine("Please enter admin password:");
             var password = Console.ReadLine()?.Trim();
-            if (password == EncryptionHelper.Decrypt(_adminPassword))
+            if (!string.IsNullOrEmpty(password) && password == EncryptionHelper.Decrypt(_adminPassword))
             {
                 Console.WriteLine("Password entered successfully");
                 return;

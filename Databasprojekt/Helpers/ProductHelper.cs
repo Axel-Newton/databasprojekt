@@ -15,6 +15,7 @@ public class ProductHelper
         Console.WriteLine("2. List all products");
         Console.WriteLine("3. Edit product");
         Console.WriteLine("4. Delete a product");
+        Console.WriteLine("5. Exit");
         Console.WriteLine("");
         
         var choice = Console.ReadKey().KeyChar;
@@ -34,6 +35,11 @@ public class ProductHelper
         else if (choice == '4')
         {
             await DeleteProductAsync();
+        }
+        else if (choice == '5')
+        {
+            Console.WriteLine("Returning...");
+            return;
         }
         else
         {
@@ -175,6 +181,8 @@ public class ProductHelper
                 {
                     Console.WriteLine($"- {product.ProductId} | {product.Name}");
                 }
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
             }
         }
     }

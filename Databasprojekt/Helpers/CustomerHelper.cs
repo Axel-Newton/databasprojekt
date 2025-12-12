@@ -14,6 +14,7 @@ public class CustomerHelper
         Console.WriteLine("1. Add a new customer");
         Console.WriteLine("2. List all customers");
         Console.WriteLine("3. Delete a Customer");
+        Console.WriteLine("4. Exit");
         Console.WriteLine("");
         
         var choice = Console.ReadKey().KeyChar;
@@ -29,6 +30,11 @@ public class CustomerHelper
         else if (choice == '3')
         {
             await DeleteCustomerAsync();
+        }
+        else if (choice == '4')
+        {
+            Console.WriteLine("Returning...");
+            return;
         }
         else
         {

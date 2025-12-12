@@ -13,6 +13,7 @@ public class CategoryHelper
         Console.WriteLine("2. List all categories");
         Console.WriteLine("3. Edit category");
         Console.WriteLine("4. Delete category");
+        Console.WriteLine("5. Exit");
         Console.WriteLine("");
         
         var choice = Console.ReadKey().KeyChar;
@@ -32,6 +33,11 @@ public class CategoryHelper
         else if (choice == '4')
         {
             await DeleteCategoryAsync();
+        }
+        else if (choice == '5')
+        {
+            Console.WriteLine("Returning...");
+            return;
         }
         else
         {
